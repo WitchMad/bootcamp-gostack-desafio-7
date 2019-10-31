@@ -11,12 +11,10 @@ export const Products = styled.FlatList.attrs({
   max-height: 340px;
 `;
 export const Item = styled.View`
-  flex: 1;
-  padding: 10px;
+  margin: 10px;
 `;
 export const Product = styled.View`
   flex-direction: row;
-  flex: 1;
 `;
 export const ProductImage = styled.Image`
   width: 70px;
@@ -68,6 +66,7 @@ export const SubPrice = styled.Text`
   font-weight: bold;
   color: #000;
   font-size: 18px;
+  margin-top: auto;
 `;
 export const TotalContainer = styled.View`
   border-top-width: 1px;
@@ -106,5 +105,6 @@ export const CartEmpty = styled.View`
 export const CartEmptyText = styled.Text`
   color: #666;
   font-size: 19px;
+  font-weight: bold;
   margin-left: 10px;
 `;

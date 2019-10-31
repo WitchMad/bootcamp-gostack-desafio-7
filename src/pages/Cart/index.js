@@ -1,7 +1,9 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import Ant from 'react-native-vector-icons/AntDesign';
+import numeral from 'numeral';
 import {
   Container,
   Products,
@@ -26,14 +28,18 @@ import {
   CartEmpty,
   CartEmptyText,
 } from './styles';
+import 'numeral/locales/pt-br';
+import * as CartActions from '../../store/modules/cart/actions';
 
-function Cart({ cart }) {
+numeral.locale('pt-br');
+
+function Cart({ cart, total, removeFromCart }) {
   return (
     <Container>
       {cart.length === 0 ? (
         <CartEmpty>
           <Ant name="shoppingcart" size={70} color="#666" />
-          <CartEmptyText>Seu carrinho está vazio</CartEmptyText>
+          <CartEmptyText>Seu carrinho está vazio...</CartEmptyText>
         </CartEmpty>
       ) : (
         <Products
@@ -52,7 +58,7 @@ function Cart({ cart }) {
                   <TitleProduct>{item.title}</TitleProduct>
                   <Price>{item.priceFormatted}</Price>
                 </InfoProduct>
-                <ButtonRemove>
+                <ButtonRemove onPress={() => removeFromCart(item.id)}>
                   <Icon name="trash-can" size={20} color="#7159c1" />
                 </ButtonRemove>
               </Product>
@@ -66,7 +72,9 @@ function Cart({ cart }) {
                     <Ant name="pluscircleo" color="#7159c1" size={20} />
                   </ButtonIncrement>
                 </AmountContainer>
-                <SubPrice>R$ 415,00</SubPrice>
+                <SubPrice>
+                  {numeral(item.amount * item.price).format('$ 0,0.00')}
+                </SubPrice>
               </SubTotal>
             </Item>
           )}
@@ -74,7 +82,7 @@ function Cart({ cart }) {
       )}
       <TotalContainer>
         <TotalTitle>TOTAL</TotalTitle>
-        <TotalPrice>R$ 1994,39</TotalPrice>
+        <TotalPrice>{total}</TotalPrice>
         <ButtonFinalize>
           <ButtonFinalizeText>Finalizar o Pedido</ButtonFinalizeText>
         </ButtonFinalize>
@@ -86,5 +94,15 @@ function Cart({ cart }) {
 // Pega as informações do state e mapeia como propriedade do componente
 const mapStateToProps = state => ({
   cart: state.cart,
+  total: numeral(
+    state.cart.reduce((total, product) => {
+      return total + product.price * product.amount;
+    }, 0)
+  ).format('$ 0,0.00'),
 });
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Cart);

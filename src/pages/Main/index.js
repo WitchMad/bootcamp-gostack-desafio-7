@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 // Conecta o componente com o estado do redux
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
 import numeral from 'numeral';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   Container,
   List,
+  Title,
   Item,
   ProductImage,
   ButtonAdd,
@@ -16,6 +17,7 @@ import {
   Amount,
 } from './styles';
 import api from '../../services/api';
+import * as CartActions from '../../store/modules/cart/actions';
 import 'numeral/locales/pt-br';
 
 class Main extends Component {
@@ -35,13 +37,9 @@ class Main extends Component {
 
   handleAddProduct = product => {
     // Serve para disparar uma action no redux
-    const { dispatch } = this.props;
+    const { addToCart } = this.props;
 
-    dispatch({
-      // Type tem que estar declarado no reducer
-      type: 'ADD_TO_CART',
-      product,
-    });
+    addToCart(product);
   };
 
   render() {
@@ -55,7 +53,7 @@ class Main extends Component {
           renderItem={({ item }) => (
             <Item>
               <ProductImage source={{ uri: item.image }} alt={item.title} />
-              <Text>{item.title}</Text>
+              <Title>{item.title}</Title>
               <Price>{item.priceFormatted}</Price>
               <ButtonAdd onPress={() => this.handleAddProduct(item)}>
                 <ButtonView>
@@ -71,5 +69,11 @@ class Main extends Component {
     );
   }
 }
+// Converte actions do componente em props
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
 
-export default connect()(Main);
+export default connect(
+  null,
+  mapDispatchToProps
+)(Main);

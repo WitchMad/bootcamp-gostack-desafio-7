@@ -14,10 +14,15 @@ export const Item = styled.View`
   margin-left: 10px;
   max-width: 250px;
 `;
+export const Title = styled.Text`
+  font-weight: bold;
+  color: #666;
+`;
 export const Price = styled.Text`
   font-size: 22px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-top: auto;
+  margin-bottom: 12px;
 `;
 export const ProductImage = styled.Image`
   width: 230px;
@@ -30,7 +35,6 @@ export const ButtonAdd = styled.TouchableOpacity`
   overflow: hidden;
   align-items: center;
   justify-content: flex-start;
-  margin-top: auto;
   flex-direction: row;
 `;
 export const ButtonAddText = styled.Text`
