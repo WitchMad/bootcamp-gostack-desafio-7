@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+// Conecta o componente com o estado do redux
+import { connect } from 'react-redux';
 import { Text } from 'react-native';
 import numeral from 'numeral';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -16,7 +18,7 @@ import {
 import api from '../../services/api';
 import 'numeral/locales/pt-br';
 
-export default class Main extends Component {
+class Main extends Component {
   state = {
     products: [],
   };
@@ -31,10 +33,14 @@ export default class Main extends Component {
     this.setState({ products: data });
   }
 
-  handleNavigate = () => {
-    const { navigation } = this.props;
+  handleAddProduct = product => {
+    // Serve para disparar uma action no redux
+    const { dispatch } = this.props;
 
-    navigation.navigate('Cart');
+    dispatch({
+      type: 'ADD_TO_CART',
+      product,
+    });
   };
 
   render() {
@@ -50,7 +56,7 @@ export default class Main extends Component {
               <ProductImage source={{ uri: item.image }} alt={item.title} />
               <Text>{item.title}</Text>
               <Price>{item.priceFormatted}</Price>
-              <ButtonAdd onPress={() => this.handleNavigate()}>
+              <ButtonAdd onPress={() => this.handleAddProduct(item)}>
                 <ButtonView>
                   <Icon name="add-shopping-cart" color="#fff" size={16} />
                   <Amount>3</Amount>
@@ -64,3 +70,5 @@ export default class Main extends Component {
     );
   }
 }
+
+export default connect()(Main);
