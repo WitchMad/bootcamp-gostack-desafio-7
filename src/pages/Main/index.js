@@ -38,6 +38,7 @@ class Main extends Component {
     const { dispatch } = this.props;
 
     dispatch({
+      // Type tem que estar declarado no reducer
       type: 'ADD_TO_CART',
       product,
     });

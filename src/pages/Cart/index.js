@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { connect } from 'react-redux';
 import Ant from 'react-native-vector-icons/AntDesign';
 import {
   Container,
@@ -22,103 +23,55 @@ import {
   TotalPrice,
   ButtonFinalize,
   ButtonFinalizeText,
+  CartEmpty,
+  CartEmptyText,
 } from './styles';
 
-export default function Cart() {
+function Cart({ cart }) {
   return (
     <Container>
-      <Products>
-        <Item>
-          <Product>
-            <ProductImage
-              source={{
-                uri:
-                  'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-              }}
-              alt="Têncis muito massa"
-            />
-            <InfoProduct>
-              <TitleProduct>Tênis muito massa</TitleProduct>
-              <Price>R$ 139,00</Price>
-            </InfoProduct>
-            <ButtonRemove>
-              <Icon name="trash-can" size={20} color="#7159c1" />
-            </ButtonRemove>
-          </Product>
-          <SubTotal>
-            <AmountContainer>
-              <ButtonDecrement>
-                <Ant name="minuscircleo" color="#7159c1" size={20} />
-              </ButtonDecrement>
-              <Amount>3</Amount>
-              <ButtonIncrement>
-                <Ant name="pluscircleo" color="#7159c1" size={20} />
-              </ButtonIncrement>
-            </AmountContainer>
-            <SubPrice>R$ 415,00</SubPrice>
-          </SubTotal>
-        </Item>
-        <Item>
-          <Product>
-            <ProductImage
-              source={{
-                uri:
-                  'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-              }}
-              alt="Têncis muito massa"
-            />
-            <InfoProduct>
-              <TitleProduct>Tênis muito massa</TitleProduct>
-              <Price>R$ 139,00</Price>
-            </InfoProduct>
-            <ButtonRemove>
-              <Icon name="trash-can" size={20} color="#7159c1" />
-            </ButtonRemove>
-          </Product>
-          <SubTotal>
-            <AmountContainer>
-              <ButtonDecrement>
-                <Ant name="minuscircleo" color="#7159c1" size={20} />
-              </ButtonDecrement>
-              <Amount>3</Amount>
-              <ButtonIncrement>
-                <Ant name="pluscircleo" color="#7159c1" size={20} />
-              </ButtonIncrement>
-            </AmountContainer>
-            <SubPrice>R$ 123,00</SubPrice>
-          </SubTotal>
-        </Item>
-        <Item>
-          <Product>
-            <ProductImage
-              source={{
-                uri:
-                  'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis1.jpg',
-              }}
-              alt="Têncis muito massa"
-            />
-            <InfoProduct>
-              <TitleProduct>Tênis muito massa</TitleProduct>
-              <Price>R$ 139,00</Price>
-            </InfoProduct>
-            <ButtonRemove>
-              <Icon name="trash-can" size={20} color="#7159c1" />
-            </ButtonRemove>
-          </Product>
-          <SubTotal>
-            <AmountContainer>
-              <ButtonDecrement>
-                <Ant name="minuscircleo" color="#7159c1" size={20} />
-              </ButtonDecrement>
-              <Amount>3</Amount>
-              <ButtonIncrement>
-                <Ant name="pluscircleo" color="#7159c1" size={20} />
-              </ButtonIncrement>
-            </AmountContainer>
-            <SubPrice>R$ 123,00</SubPrice>
-          </SubTotal>
-        </Item>
-      </Products>
+      {cart.length === 0 ? (
+        <CartEmpty>
+          <Ant name="shoppingcart" size={70} color="#666" />
+          <CartEmptyText>Seu carrinho está vazio</CartEmptyText>
+        </CartEmpty>
+      ) : (
+        <Products
+          data={cart}
+          keyExtractor={product => String(product.id)}
+          renderItem={({ item }) => (
+            <Item>
+              <Product>
+                <ProductImage
+                  source={{
+                    uri: item.image,
+                  }}
+                  alt={item.title}
+                />
+                <InfoProduct>
+                  <TitleProduct>{item.title}</TitleProduct>
+                  <Price>{item.priceFormatted}</Price>
+                </InfoProduct>
+                <ButtonRemove>
+                  <Icon name="trash-can" size={20} color="#7159c1" />
+                </ButtonRemove>
+              </Product>
+              <SubTotal>
+                <AmountContainer>
+                  <ButtonDecrement>
+                    <Ant name="minuscircleo" color="#7159c1" size={20} />
+                  </ButtonDecrement>
+                  <Amount>{item.amount}</Amount>
+                  <ButtonIncrement>
+                    <Ant name="pluscircleo" color="#7159c1" size={20} />
+                  </ButtonIncrement>
+                </AmountContainer>
+                <SubPrice>R$ 415,00</SubPrice>
+              </SubTotal>
+            </Item>
+          )}
+        />
+      )}
       <TotalContainer>
         <TotalTitle>TOTAL</TotalTitle>
         <TotalPrice>R$ 1994,39</TotalPrice>
@@ -129,3 +82,9 @@ export default function Cart() {
     </Container>
   );
 }
+
+// Pega as informações do state e mapeia como propriedade do componente
+const mapStateToProps = state => ({
+  cart: state.cart,
+});
+export default connect(mapStateToProps)(Cart);

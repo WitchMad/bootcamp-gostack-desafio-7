@@ -5,7 +5,7 @@ export const Container = styled.View`
   background: #fff;
   border-radius: 4px;
 `;
-export const Products = styled.ScrollView.attrs({
+export const Products = styled.FlatList.attrs({
   vertical: true,
 })`
   max-height: 340px;
@@ -96,4 +96,15 @@ export const ButtonFinalize = styled.TouchableOpacity`
 export const ButtonFinalizeText = styled.Text`
   color: #fff;
   font-weight: bold;
+`;
+export const CartEmpty = styled.View`
+  padding: 10px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`;
+export const CartEmptyText = styled.Text`
+  color: #666;
+  font-size: 19px;
+  margin-left: 10px;
 `;
