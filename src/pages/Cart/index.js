@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Ant from 'react-native-vector-icons/AntDesign';
 import numeral from 'numeral';
@@ -34,6 +35,13 @@ import * as CartActions from '../../store/modules/cart/actions';
 numeral.locale('pt-br');
 
 function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
+  Cart.propTypes = {
+    cart: PropTypes.shape().isRequired,
+    total: PropTypes.number.isRequired,
+    removeFromCart: PropTypes.func.isRequired,
+    updateAmountRequest: PropTypes.func.isRequired,
+  };
+
   function decrement(product) {
     updateAmountRequest(product.id, product.amount - 1);
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   Container,
   Logo,
@@ -11,6 +12,11 @@ import {
 
 // O cart vem como uma propriedade
 function Header({ navigation, cartSize }) {
+  Header.propTypes = {
+    navigation: PropTypes.shape().isRequired,
+    cartSize: PropTypes.number.isRequired,
+  };
+
   return (
     <Container>
       <LogoContainer onPress={() => navigation.navigate('Main')}>

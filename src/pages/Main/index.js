@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 // Conecta o componente com o estado do redux
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import numeral from 'numeral';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -23,6 +24,11 @@ import 'numeral/locales/pt-br';
 class Main extends Component {
   state = {
     products: [],
+  };
+
+  static propTypes = {
+    addToCartRequest: PropTypes.func.isRequired,
+    amount: PropTypes.number.isRequired,
   };
 
   async componentDidMount() {
