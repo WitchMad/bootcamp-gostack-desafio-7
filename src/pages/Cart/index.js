@@ -36,8 +36,7 @@ numeral.locale('pt-br');
 
 function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
   Cart.propTypes = {
-    cart: PropTypes.shape().isRequired,
-    total: PropTypes.number.isRequired,
+    total: PropTypes.string.isRequired,
     removeFromCart: PropTypes.func.isRequired,
     updateAmountRequest: PropTypes.func.isRequired,
   };
