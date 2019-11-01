@@ -1,13 +1,21 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
-import { Container, Logo, BasketContainer, ItemCount } from './styles';
+import {
+  Container,
+  Logo,
+  BasketContainer,
+  ItemCount,
+  LogoContainer,
+} from './styles';
 
 // O cart vem como uma propriedade
 function Header({ navigation, cartSize }) {
   return (
     <Container>
-      <Logo />
+      <LogoContainer onPress={() => navigation.navigate('Main')}>
+        <Logo />
+      </LogoContainer>
       <BasketContainer onPress={() => navigation.navigate('Cart')}>
         <Icon name="shopping-basket" color="#fff" size={24} />
         <ItemCount>{cartSize}</ItemCount>

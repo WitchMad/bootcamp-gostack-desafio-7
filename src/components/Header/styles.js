@@ -6,6 +6,7 @@ export const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
+export const LogoContainer = styled.TouchableOpacity``;
 export const Logo = styled.Image.attrs({
   source: logo,
   resizeMode: 'cover',

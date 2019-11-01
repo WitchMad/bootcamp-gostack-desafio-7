@@ -35,11 +35,11 @@ class Main extends Component {
     this.setState({ products: data });
   }
 
-  handleAddProduct = product => {
+  handleAddProduct = id => {
     // Serve para disparar uma action no redux
-    const { addToCart } = this.props;
+    const { addToCartRequest } = this.props;
 
-    addToCart(product);
+    addToCartRequest(id);
   };
 
   render() {
@@ -56,7 +56,7 @@ class Main extends Component {
               <ProductImage source={{ uri: item.image }} alt={item.title} />
               <Title>{item.title}</Title>
               <Price>{item.priceFormatted}</Price>
-              <ButtonAdd onPress={() => this.handleAddProduct(item)}>
+              <ButtonAdd onPress={() => this.handleAddProduct(item.id)}>
                 <ButtonView>
                   <Icon name="add-shopping-cart" color="#fff" size={16} />
                   <Amount>{amount[item.id] || 0}</Amount>
