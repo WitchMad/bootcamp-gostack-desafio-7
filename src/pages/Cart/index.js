@@ -33,7 +33,13 @@ import * as CartActions from '../../store/modules/cart/actions';
 
 numeral.locale('pt-br');
 
-function Cart({ cart, total, removeFromCart }) {
+function Cart({ cart, total, removeFromCart, updateAmount }) {
+  function decrement(product) {
+    updateAmount(product.id, product.amount - 1);
+  }
+  function increment(product) {
+    updateAmount(product.id, product.amount + 1);
+  }
   return (
     <Container>
       {cart.length === 0 ? (
@@ -64,11 +70,11 @@ function Cart({ cart, total, removeFromCart }) {
               </Product>
               <SubTotal>
                 <AmountContainer>
-                  <ButtonDecrement>
+                  <ButtonDecrement onPress={() => decrement(item)}>
                     <Ant name="minuscircleo" color="#7159c1" size={20} />
                   </ButtonDecrement>
                   <Amount>{item.amount}</Amount>
-                  <ButtonIncrement>
+                  <ButtonIncrement onPress={() => increment(item)}>
                     <Ant name="pluscircleo" color="#7159c1" size={20} />
                   </ButtonIncrement>
                 </AmountContainer>
