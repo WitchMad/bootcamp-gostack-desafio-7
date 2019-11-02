@@ -62,7 +62,7 @@ export default function Cart() {
     <Container>
       {finalized ? (
         <>
-          <Success>Sua compra foi realizada com sucesso!</Success>
+          <Success>Compra realizada com sucesso!</Success>
           <Lottie
             autoPlay
             source={animation}
