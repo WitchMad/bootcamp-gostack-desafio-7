@@ -1,8 +1,6 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Ant from 'react-native-vector-icons/AntDesign';
 import numeral from 'numeral';
 import {
@@ -34,18 +32,23 @@ import * as CartActions from '../../store/modules/cart/actions';
 
 numeral.locale('pt-br');
 
-function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
-  Cart.propTypes = {
-    total: PropTypes.string.isRequired,
-    removeFromCart: PropTypes.func.isRequired,
-    updateAmountRequest: PropTypes.func.isRequired,
-  };
+export default function Cart() {
+  const cart = useSelector(state => state.cart);
+  const total = useSelector(state =>
+    numeral(
+      state.cart.reduce((totalSum, product) => {
+        return totalSum + product.price * product.amount;
+      }, 0)
+    ).format('$ 0,0.00')
+  );
+
+  const dispatch = useDispatch();
 
   function decrement(product) {
-    updateAmountRequest(product.id, product.amount - 1);
+    dispatch(CartActions.updateAmountRequest(product.id, product.amount - 1));
   }
   function increment(product) {
-    updateAmountRequest(product.id, product.amount + 1);
+    dispatch(CartActions.updateAmountRequest(product.id, product.amount + 1));
   }
   return (
     <Container>
@@ -71,7 +74,9 @@ function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
                   <TitleProduct>{item.title}</TitleProduct>
                   <Price>{item.priceFormatted}</Price>
                 </InfoProduct>
-                <ButtonRemove onPress={() => removeFromCart(item.id)}>
+                <ButtonRemove
+                  onPress={() => dispatch(CartActions.removeFromCart(item.id))}
+                >
                   <Icon name="trash-can" size={20} color="#7159c1" />
                 </ButtonRemove>
               </Product>
@@ -105,17 +110,3 @@ function Cart({ cart, total, removeFromCart, updateAmountRequest }) {
 }
 
 // Pega as informações do state e mapeia como propriedade do componente
-const mapStateToProps = state => ({
-  cart: state.cart,
-  total: numeral(
-    state.cart.reduce((total, product) => {
-      return total + product.price * product.amount;
-    }, 0)
-  ).format('$ 0,0.00'),
-});
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Cart);

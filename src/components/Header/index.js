@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Container,
@@ -11,11 +11,12 @@ import {
 } from './styles';
 
 // O cart vem como uma propriedade
-function Header({ navigation, cartSize }) {
+export default function Header({ navigation }) {
   Header.propTypes = {
     navigation: PropTypes.shape().isRequired,
-    cartSize: PropTypes.number.isRequired,
   };
+
+  const cartSize = useSelector(state => state.cart.length);
 
   return (
     <Container>
@@ -29,8 +30,4 @@ function Header({ navigation, cartSize }) {
     </Container>
   );
 }
-
 // A função connect recebe o state inteiro do redux
-export default connect(state => ({
-  cartSize: state.cart.length,
-}))(Header);
