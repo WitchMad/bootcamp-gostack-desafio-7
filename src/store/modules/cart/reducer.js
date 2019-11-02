@@ -22,6 +22,9 @@ export default function cart(state = [], action) {
         }
       });
     }
+    case '@cart/CLEAN': {
+      return (state = []);
+    }
     default:
       return state;
   }

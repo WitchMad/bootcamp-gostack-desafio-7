@@ -5,6 +5,11 @@ export function addToCartRequest(id) {
     id,
   };
 }
+export function cleanCart() {
+  return {
+    type: '@cart/CLEAN',
+  };
+}
 export function addToCartSuccess(product) {
   return {
     // Type tem que estar declarado no reducer

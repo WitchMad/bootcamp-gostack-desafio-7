@@ -2,6 +2,8 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   margin: 20px;
+  justify-content: center;
+  align-items: center;
 `;
 export const List = styled.FlatList.attrs({
   horizontal: true,

@@ -108,3 +108,10 @@ export const CartEmptyText = styled.Text`
   font-weight: bold;
   margin-left: 10px;
 `;
+export const Success = styled.Text`
+  color: #333;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+`;
