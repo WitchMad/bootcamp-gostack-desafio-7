@@ -79,57 +79,59 @@ export default function Cart() {
               <CartEmptyText>Seu carrinho está vazio...</CartEmptyText>
             </CartEmpty>
           ) : (
-            <Products
-              data={cart}
-              keyExtractor={product => String(product.id)}
-              renderItem={({ item }) => (
-                <Item>
-                  <Product>
-                    <ProductImage
-                      source={{
-                        uri: item.image,
-                      }}
-                      alt={item.title}
-                    />
-                    <InfoProduct>
-                      <TitleProduct>{item.title}</TitleProduct>
-                      <Price>{item.priceFormatted}</Price>
-                    </InfoProduct>
-                    <ButtonRemove
-                      onPress={() =>
-                        dispatch(CartActions.removeFromCart(item.id))
-                      }
-                    >
-                      <Icon name="trash-can" size={20} color="#7159c1" />
-                    </ButtonRemove>
-                  </Product>
-                  <SubTotal>
-                    <AmountContainer>
-                      <ButtonDecrement onPress={() => decrement(item)}>
-                        <Ant name="minuscircleo" color="#7159c1" size={20} />
-                      </ButtonDecrement>
-                      <Amount>{item.amount}</Amount>
-                      <ButtonIncrement onPress={() => increment(item)}>
-                        <Ant name="pluscircleo" color="#7159c1" size={20} />
-                      </ButtonIncrement>
-                    </AmountContainer>
-                    <SubPrice>
-                      {numeral(item.amount * item.price).format('$ 0,0.00')}
-                    </SubPrice>
-                  </SubTotal>
-                </Item>
-              )}
-            />
+            <>
+              <Products
+                data={cart}
+                keyExtractor={product => String(product.id)}
+                renderItem={({ item }) => (
+                  <Item>
+                    <Product>
+                      <ProductImage
+                        source={{
+                          uri: item.image,
+                        }}
+                        alt={item.title}
+                      />
+                      <InfoProduct>
+                        <TitleProduct>{item.title}</TitleProduct>
+                        <Price>{item.priceFormatted}</Price>
+                      </InfoProduct>
+                      <ButtonRemove
+                        onPress={() =>
+                          dispatch(CartActions.removeFromCart(item.id))
+                        }
+                      >
+                        <Icon name="trash-can" size={20} color="#7159c1" />
+                      </ButtonRemove>
+                    </Product>
+                    <SubTotal>
+                      <AmountContainer>
+                        <ButtonDecrement onPress={() => decrement(item)}>
+                          <Ant name="minuscircleo" color="#7159c1" size={20} />
+                        </ButtonDecrement>
+                        <Amount>{item.amount}</Amount>
+                        <ButtonIncrement onPress={() => increment(item)}>
+                          <Ant name="pluscircleo" color="#7159c1" size={20} />
+                        </ButtonIncrement>
+                      </AmountContainer>
+                      <SubPrice>
+                        {numeral(item.amount * item.price).format('$ 0,0.00')}
+                      </SubPrice>
+                    </SubTotal>
+                  </Item>
+                )}
+              />
+              <TotalContainer>
+                <TotalTitle>TOTAL</TotalTitle>
+                <TotalPrice>{total}</TotalPrice>
+                <ButtonFinalize>
+                  <ButtonFinalizeText onPress={() => finalizedOrder()}>
+                    Finalizar o Pedido
+                  </ButtonFinalizeText>
+                </ButtonFinalize>
+              </TotalContainer>
+            </>
           )}
-          <TotalContainer>
-            <TotalTitle>TOTAL</TotalTitle>
-            <TotalPrice>{total}</TotalPrice>
-            <ButtonFinalize>
-              <ButtonFinalizeText onPress={() => finalizedOrder()}>
-                Finalizar o Pedido
-              </ButtonFinalizeText>
-            </ButtonFinalize>
-          </TotalContainer>
         </>
       )}
     </Container>
